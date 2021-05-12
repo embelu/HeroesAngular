@@ -1,5 +1,5 @@
-import { HEROES } from './../mock-heroes';
 import { Component, OnInit } from '@angular/core';
+import { HeroService } from '../hero.service';
 import { Hero } from '../hero';
 
 
@@ -11,7 +11,7 @@ import { Hero } from '../hero';
 })
 export class HeroesComponent implements OnInit {
 
-  heroes = HEROES;
+  heroes: Hero[] = [];
   selectedHero?: Hero; // Héro sélectionné lors du clic
 
   //hero: Hero = {
@@ -19,9 +19,10 @@ export class HeroesComponent implements OnInit {
   //  name: 'Windstorm'
   // };
 
-  constructor() { }
+  constructor(private heroService: HeroService) { }
 
   ngOnInit(): void {
+    this.getHeroes();
   }
 
   onSelect(hero: Hero): void {
@@ -29,4 +30,7 @@ export class HeroesComponent implements OnInit {
     console.log(this.selectedHero)
   }
 
+  getHeroes(): void {
+    this.heroes = this.heroService.getHeroes();
+  }
 }
